@@ -1,4 +1,4 @@
 package by.bsuir.andrei.petclinic.model;
 
-public class PetType {
+public class PetType extends BaseEntity {
 }
