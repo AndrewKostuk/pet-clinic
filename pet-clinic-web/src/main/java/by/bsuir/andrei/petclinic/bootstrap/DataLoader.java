@@ -57,7 +57,13 @@ public class DataLoader implements CommandLineRunner {
         pet1.setBirthDate(LocalDate.now());
         pet1.setOwner(owner1);
         owner1.getPets().add(pet1);
+        Visit visit1 = new Visit();
+        visit1.setDate(LocalDate.now());
+        visit1.setDescription("his leg hurts");
+        visit1.setPet(pet1);
+        pet1.getVisits().add(visit1);
         ownerService.save(owner1);
+        visitService.save(visit1);
 
         Owner owner2 = new Owner();
         owner2.setFirstName("owner2FN");
@@ -71,9 +77,16 @@ public class DataLoader implements CommandLineRunner {
         pet2.setBirthDate(LocalDate.now());
         pet2.setOwner(owner2);
         owner2.getPets().add(pet2);
+        Visit visit2 = new Visit();
+        visit2.setDate(LocalDate.now());
+        visit2.setDescription("his stomac hurts");
+        visit2.setPet(pet2);
+        pet2.getVisits().add(visit2);
         ownerService.save(owner2);
+        visitService.save(visit2);
 
         System.out.println("new owners have been saved");
+        System.out.println("new visits have been saved");
 
         Speciality radiology = new Speciality();
         radiology.setDescription("radiology");
@@ -100,20 +113,5 @@ public class DataLoader implements CommandLineRunner {
         vetService.save(vet2);
 
         System.out.println("new vets have been saved");
-
-        Visit visit1 = new Visit();
-        visit1.setDate(LocalDate.now());
-        visit1.setDescription("his leg hurts");
-        visit1.setPet(pet1);
-
-        Visit visit2 = new Visit();
-        visit2.setDate(LocalDate.now());
-        visit2.setDescription("his stomac hurts");
-        visit2.setPet(pet2);
-
-        visitService.save(visit1);
-        visitService.save(visit2);
-
-        System.out.println("new visits have been saved");
     }
 }
