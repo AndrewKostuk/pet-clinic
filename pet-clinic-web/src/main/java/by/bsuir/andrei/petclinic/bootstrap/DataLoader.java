@@ -1,10 +1,7 @@
 package by.bsuir.andrei.petclinic.bootstrap;
 
 import by.bsuir.andrei.petclinic.model.*;
-import by.bsuir.andrei.petclinic.services.OwnerService;
-import by.bsuir.andrei.petclinic.services.PetTypeService;
-import by.bsuir.andrei.petclinic.services.SpecialityService;
-import by.bsuir.andrei.petclinic.services.VetService;
+import by.bsuir.andrei.petclinic.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -17,15 +14,18 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialityService specialityService;
+    private final VisitService visitService;
 
     public DataLoader(OwnerService ownerService,
                       VetService vetService,
                       PetTypeService petTypeService,
-                      SpecialityService specialityService) {
+                      SpecialityService specialityService,
+                      VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialityService = specialityService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -100,5 +100,20 @@ public class DataLoader implements CommandLineRunner {
         vetService.save(vet2);
 
         System.out.println("new vets have been saved");
+
+        Visit visit1 = new Visit();
+        visit1.setDate(LocalDate.now());
+        visit1.setDescription("his leg hurts");
+        visit1.setPet(pet1);
+
+        Visit visit2 = new Visit();
+        visit2.setDate(LocalDate.now());
+        visit2.setDescription("his stomac hurts");
+        visit2.setPet(pet2);
+
+        visitService.save(visit1);
+        visitService.save(visit2);
+
+        System.out.println("new visits have been saved");
     }
 }
