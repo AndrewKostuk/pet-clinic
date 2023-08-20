@@ -5,6 +5,8 @@ import by.bsuir.andrei.petclinic.services.OwnerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -42,11 +44,12 @@ class OwnerControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(ownerController).build();
     }
 
-    @Test
-    void listOwners() throws Exception {
+    @ParameterizedTest
+    @ValueSource(strings = {"/owners", "/owners/index", "/owners/index.html"})
+    void listOwners(String urlPath) throws Exception {
         when(ownerService.findAll()).thenReturn(owners);
 
-        mockMvc.perform(get("/owners"))
+        mockMvc.perform(get(urlPath))
                 .andExpect(status().isOk())
                 .andExpect(view().name("owners/index"))
                 .andExpect(model().attribute("owners", hasSize(2)));
